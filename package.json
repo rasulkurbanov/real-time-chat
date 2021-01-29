@@ -1,0 +1,24 @@
+{
+  "name": "real-time-chat",
+  "version": "1.0.0",
+  "description": "Real time chat using socket.io ",
+  "main": "server.js",
+  "dependencies": {
+    "express": "^4.17.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "nodemon src/server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rasulkurbanov/real-time-chat.git"
+  },
+  "author": "Rasuljon Kurbanov",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/rasulkurbanov/real-time-chat/issues"
+  },
+  "homepage": "https://github.com/rasulkurbanov/real-time-chat#readme"
+}
