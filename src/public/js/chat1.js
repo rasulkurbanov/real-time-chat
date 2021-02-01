@@ -4,14 +4,15 @@ objDiv.scrollTop = objDiv.scrollHeight;
 
 let socket = io()
 
-let message = document.getElementById('messages')
-let form = document.getElementById('form')
-let input = document.getElementById('input')
+let form = document.getElementById('messageForm')
+let input = document.getElementById('messageInput')
+let message = document.getElementById('messageInput').value
 
 
 form.addEventListener('submit', function (e) {
   e.preventDefault()
 
+  console.log(input.value)
   if (input.value) {
     socket.emit('chat message', input.value)
     input.value = ''
