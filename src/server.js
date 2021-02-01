@@ -7,11 +7,13 @@ const PORT = process.env.PORT || 3000
 const path = require('path')
 
 //Make public file static
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, 'public'))); //  "public" off of current is root
+// app.use(express.static(path.join(__dirname + '/public')));
 
+console.log(path.join(__dirname, 'public'))
 
 app.get('/', (__, res) => {
-  res.render('index.html')
+  res.render('chat.html')
 })
 
 io.on('connection', (socket) =>{
