@@ -1,24 +1,48 @@
 let socket = io()
 
-let message = document.getElementById('messages')
-let form = document.getElementById('form')
-let input = document.getElementById('input')
 
-const name = prompt('What is your name?!')
+let inboxPeople = document.getElementById('inbox__people')
+let userName = '';
 
-form.addEventListener('submit', function (e) {
-  e.preventDefault()
 
-  if (input.value) {
-    socket.emit('chat message', {message: input.value, name: name})
-    input.value = ''
+let form  = document.getElementById('message_form')
+let input = document.getElementById('message_form_input')
+
+
+function newUserConnected(user) {
+  userName = user || `User${Math.floor(Math.random() * 1000000)}`
+  socket.emit('new user', userName)
+
+  addToUserBox(userName)
+}
+
+function addToUserBox(userName) {
+  if(!document.querySelector(`.${userName}-userlist`)) {
+    return;
   }
+  const userBox = `
+    <div class="chat_id ${userName}-userlist">
+      <h5>${userName}</h5>
+    </div>
+  `
+  inboxPeople.innerHTML += userBox
+}
 
-})
+newUserConnected(); 
 
-socket.on('chat message', function (msg) {
-  let item = document.createElement('li')
-  item.textContent = msg.message
-  messages.appendChild(item)
-  window.scrollTo(0, document.body.scrollHeight)
+
+// form.addEventListener('submit', function (e) {
+//   e.preventDefault()
+
+//   if (input.value) {
+//     socket.emit('chat message', {message: input})
+//     input.value = ''
+//   }
+
+// })
+
+socket.on('new user', function (data) {
+  data.map((user) => {
+    addToUserBox(user)
+  })
 })
