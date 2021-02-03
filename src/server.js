@@ -18,18 +18,15 @@ app.get('/', (__, res) => {
 })
 
 io.on('connection', (socket) =>{
-  console.log('A user connected')
+  console.log('User connected')
   
-  socket.on('new user', (data) => {
-    socket.userId = data
-    activeUsers.add(data)
-    io.emit('new user', [...activeUsers])
-    console.log(data)
+  socket.on('new message', (msg) => {
+    console.log(msg)
   })
 
+
   socket.on('disconnect', () => {
-    activeUsers.delete(socket.userId)
-    io.emit('user disconnected', socket.userId)
+    console.log('User disconnected')
   })
 })
 

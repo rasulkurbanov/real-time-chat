@@ -1,48 +1,32 @@
 let socket = io()
 
+let messageFormInput = document.getElementById('message_form_input')
+let messageForm = document.getElementById('message_form')
+let locationBtn = document.getElementById("shareLocationBtn")
+let messageFormBtn = document.getElementById('message_form__button')
 
-let inboxPeople = document.getElementById('inbox__people')
-let userName = '';
+messageForm.addEventListener('submit', (e) => {
+  e.preventDefault()
 
+  messageFormBtn.setAttribute('disabled', 'disabled')
 
-let form  = document.getElementById('message_form')
-let input = document.getElementById('message_form_input')
+  let message = messageFormInput.value
 
+  socket.emit('new message', message)
+  messageFormBtn.removeAttribute('disabled')
+  messageFormInput.value = ''
+  messageFormInput.focus()
 
-function newUserConnected(user) {
-  userName = user || `User${Math.floor(Math.random() * 1000000)}`
-  socket.emit('new user', userName)
-
-  addToUserBox(userName)
-}
-
-function addToUserBox(userName) {
-  if(!document.querySelector(`.${userName}-userlist`)) {
-    return;
-  }
-  const userBox = `
-    <div class="chat_id ${userName}-userlist">
-      <h5>${userName}</h5>
-    </div>
-  `
-  inboxPeople.innerHTML += userBox
-}
-
-newUserConnected(); 
+})
 
 
-// form.addEventListener('submit', function (e) {
-//   e.preventDefault()
-
-//   if (input.value) {
-//     socket.emit('chat message', {message: input})
-//     input.value = ''
+// locationBtn.addEventListener('click', () => {
+//   if(!navigator.geolocation) {
+//     alert('Geolocation is not supported by your browser')
 //   }
 
-// })
+//   navigator.geolocation.getCurrentPosition((position) => {
+//     console.log(position)
+//   })
 
-socket.on('new user', function (data) {
-  data.map((user) => {
-    addToUserBox(user)
-  })
-})
+// })
